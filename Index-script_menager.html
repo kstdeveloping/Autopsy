@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+   
+    <label for="browser">Choose your desired goal of Autopsy(if empty=full Autopsy)</label>
+    <input list="browsers" name="browser" id="browser">
+    
+    <datalist id="Autopsy_goal">
+      <option value="SMS">
+      <option value="Tel.conversations">
+      <option value="Viber">
+      <option value="Photo search">
+      <option value="Full search">
+
+    </datalist>
+
+<p>Script menager <output id="result"><time>start</time></output></p>
+<button onclick="startWorker()">Start Autopsy</button> 
+<button onclick="stopWorker()">Stop Autopsy</button>
+
+
+
+<script>
+var w;
+
+function startWorker() {
+  if(typeof(Worker) !== "undefined") {
+    if(typeof(w) == "undefined") {
+      w = new Worker("demo_workers.js");
+    }
+    w.onmessage = function(event) {
+      document.getElementById("result").innerHTML = event.data;
+    };
+  } else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Workers...";
+  }
+}
+
+function stopWorker() { 
+  w.terminate();
+  w = undefined;
+}
+</script>
+<button onclick="window.location.href = 'Eror401.html';">Log</button>
+<form>
+    <button type="submit" formaction="message100.html">Send Info to server and start</button>
+ </form>
+ <a href="Autopsy status.html">view Autopsy status</a>
+ <p>please login to proceed: </p>
+ <a href="login.html">login</a>
+</body>
+</html>
